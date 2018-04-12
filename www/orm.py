@@ -1,24 +1,13 @@
-import logging
+# -*- coding: utf-8 -*-
+# @Time    : 2018/4/12 下午11:52
+# @Author  : Narata
+# @File    : orm.py
+# @Software: PyCharm
+
 import asyncio
+import logging
 import aiomysql
-from aiohttp import web
 from logging import log
-
-
-logging.basicConfig(level=logging.INFO)
-
-
-def index(request):
-    return web.Response(body='abc')
-
-
-@asyncio.coroutine
-def init(loop):
-    app = web.Application(loop=loop)
-    app.router.add_route('GET', '/', index)
-    srv = yield from loop.create_server(app.make_handler(), '127.0.0.1', 9000)
-    logging.info('server started at http://127.0.0.1:9000...')
-    return srv
 
 
 @asyncio.coroutine
@@ -69,8 +58,3 @@ def execute(sql, args):
         except BaseException as e:
             raise
         return affected
-
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(init(loop))
-loop.run_forever()
